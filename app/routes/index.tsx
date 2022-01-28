@@ -1,32 +1,21 @@
+import { Form } from "remix";
+import { useLogin } from "~/utils/LoginContext";
+
 export default function Index() {
+  const userId = useLogin();
+
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
+    <div>
       <h1>Welcome to Remix</h1>
-      <ul>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/blog"
-            rel="noreferrer"
-          >
-            15m Quickstart Blog Tutorial
-          </a>
-        </li>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/jokes"
-            rel="noreferrer"
-          >
-            Deep Dive Jokes App Tutorial
-          </a>
-        </li>
-        <li>
-          <a target="_blank" href="https://remix.run/docs" rel="noreferrer">
-            Remix Docs
-          </a>
-        </li>
-      </ul>
+      {userId ? (
+        <Form method="delete" action="/auth/logout">
+          <button type="submit">logout</button>
+        </Form>
+      ) : (
+        <Form method="post" action="auth/login">
+          <button type="submit">login</button>
+        </Form>
+      )}
     </div>
   );
 }

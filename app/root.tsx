@@ -4,15 +4,39 @@ import {
   Meta,
   Outlet,
   Scripts,
-  ScrollRestoration
+  ScrollRestoration,
+  useLoaderData,
 } from "remix";
-import type { MetaFunction } from "remix";
+import type { MetaFunction, LoaderFunction } from "remix";
+import Layout from './utils/Layout';
+import LoginContext from "./utils/LoginContext";
+import { getUserIdFromSession } from "./utils/session.server";
 
 export const meta: MetaFunction = () => {
-  return { title: "New Remix App" };
+  return { title: "Minimal Remix App" };
+};
+
+export const loader: LoaderFunction = async function ({ request }) {
+  const userId = await getUserIdFromSession(request);
+  console.log("loader userId", userId);
+  return userId || null;
 };
 
 export default function App() {
+  const userId = useLoaderData<string | null>();
+
+  return (
+    <Document>
+      <LoginContext.Provider value={userId}>
+        <Layout>
+          <Outlet />
+        </Layout>
+      </LoginContext.Provider>
+    </Document>
+  );
+}
+
+const Document: React.FC = function ({ children }) {
   return (
     <html lang="en">
       <head>
@@ -22,11 +46,11 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Outlet />
+        {children}
         <ScrollRestoration />
         <Scripts />
         {process.env.NODE_ENV === "development" && <LiveReload />}
       </body>
     </html>
   );
-}
+};
