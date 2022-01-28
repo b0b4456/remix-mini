@@ -4,7 +4,7 @@ import { createUserSession } from "~/utils/session.server";
 export const action: ActionFunction = function ({ request }) {
   const id = `b0b${Date.now()}`;
   console.log("logging in!", id);
-  return createUserSession(request, { id }, `/user/${id}`);
+  return createUserSession(request, { id }, `/user`);
 };
 
 export default function Login() {
