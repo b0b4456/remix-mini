@@ -3,9 +3,9 @@ import { redirectBack } from "~/utils/respond.server";
 import { createUserSession } from "~/utils/session.server";
 
 export const action: ActionFunction = function ({ request }) {
-  const id = `user${Date.now()}`;
+  const id = `b0b${Date.now()}`;
   console.log("logging in!", id);
-  return createUserSession(request, { id }, "/");
+  return createUserSession(request, { id }, `/user/${id}`);
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
