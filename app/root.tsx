@@ -8,8 +8,7 @@ import {
   useCatch,
   useLoaderData,
 } from "remix";
-import globalCss from "./style.css";
-import type { MetaFunction, LoaderFunction, LinksFunction} from "remix";
+import type { MetaFunction, LoaderFunction } from "remix";
 import Layout from "./utils/Layout";
 import LoginContext from "./utils/LoginContext";
 import { getUserIdFromSession } from "./utils/session.server";
@@ -17,13 +16,6 @@ import { getUserIdFromSession } from "./utils/session.server";
 export const meta: MetaFunction = () => {
   return { title: "Minimal Remix App" };
 };
-
-export const links: LinksFunction = () => [
-  {
-    rel: "stylesheet",
-    href: globalCss,
-  },
-];
 
 export const loader: LoaderFunction = async function ({ request }) {
   const userId = await getUserIdFromSession(request);
