@@ -13,6 +13,7 @@ export const loader: LoaderFunction = async function ({ request, params }) {
 export default function() {
   return <div>
     <h1>you are logged in!</h1>
+    <p>the footer should display a user id</p>
     <Link to="/">go home</Link>
   </div>
 };
