@@ -1,4 +1,4 @@
-import type { LoaderFunction } from "remix";
+import { Link, LoaderFunction } from "remix";
 import { forbidden } from "~/utils/respond.server";
 import { authenticated } from "~/utils/session.server";
 
@@ -11,5 +11,8 @@ export const loader: LoaderFunction = async function ({ request, params }) {
 };
 
 export default function() {
-  return <h1>you are logged in!</h1>
+  return <div>
+    <h1>you are logged in!</h1>
+    <Link to="/">go home</Link>
+  </div>
 };

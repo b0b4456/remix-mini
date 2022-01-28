@@ -1,5 +1,4 @@
-import type { ActionFunction, LoaderFunction } from "remix";
-import { redirectBack } from "~/utils/respond.server";
+import { ActionFunction, Form } from "remix";
 import { createUserSession } from "~/utils/session.server";
 
 export const action: ActionFunction = function ({ request }) {
@@ -8,6 +7,10 @@ export const action: ActionFunction = function ({ request }) {
   return createUserSession(request, { id }, `/user/${id}`);
 };
 
-export const loader: LoaderFunction = async ({ request }) => {
-  return redirectBack(request, { fallback: "/" });
-};
+export default function Login() {
+  return (
+    <Form method="post">
+      <button type="submit">login</button>
+    </Form>
+  );
+}

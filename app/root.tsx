@@ -5,16 +5,25 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useCatch,
   useLoaderData,
 } from "remix";
-import type { MetaFunction, LoaderFunction } from "remix";
-import Layout from './utils/Layout';
+import globalCss from "./style.css";
+import type { MetaFunction, LoaderFunction, LinksFunction} from "remix";
+import Layout from "./utils/Layout";
 import LoginContext from "./utils/LoginContext";
 import { getUserIdFromSession } from "./utils/session.server";
 
 export const meta: MetaFunction = () => {
   return { title: "Minimal Remix App" };
 };
+
+export const links: LinksFunction = () => [
+  {
+    rel: "stylesheet",
+    href: globalCss,
+  },
+];
 
 export const loader: LoaderFunction = async function ({ request }) {
   const userId = await getUserIdFromSession(request);
@@ -54,3 +63,14 @@ const Document: React.FC = function ({ children }) {
     </html>
   );
 };
+
+export function CatchBoundary() {
+  let caught = useCatch();
+
+  return (
+    <Document>
+      <h1>a wild error appears</h1>
+      <pre>{JSON.stringify(caught, null, 2)}</pre>
+    </Document>
+  );
+}
